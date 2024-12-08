@@ -3,11 +3,11 @@
 '''
 OPS445 Assignment 2
 Program: assignment2.py 
-Author: "Student Name"
-Semester: "Enter Winter/Summer/Fall Year"
+Author: Chograb Tenzin
+Semester: "Fall 2024
 
 The python code in this file is original work written by
-"Student Name". No code in this file is copied from any other source 
+Chograb Tenzin. No code in this file is copied from any other source 
 except those provided by the course instructor, including any person, 
 textbook, or on-line resource. I have not shared this python script 
 with anyone or anything except for submission for grading.  
@@ -34,19 +34,45 @@ def parse_command_args() -> object:
 # -H human readable
 # -r running only
 
+# first milestone begins ------------------------------------------------------------
+
 def percent_to_graph(percent: float, length: int=20) -> str:
     "turns a percent 0.0 - 1.0 into a bar graph"
-    ...
+    #if value no within range not within range
+    if not (0.0 <= percent <= 1.0):
+        raise ValueError ( "not between 0.0 and 1.0")
+        #calculate number of # characters
+    num_filled = int (percent * length)
+    #return graph output
+    return '#' * num_filled + ' '* (length-num_filled)
+
 # percent to graph function
+
 
 def get_sys_mem() -> int:
     "return total system memory (used or available) in kB"
-    ...
+    # open the requested mem file
+    with open("/proc/meminfo", "r") as mem_file:    
+        for line in mem_file:
+            if 'MemTotal' in line:
+                sys_total_mem = int(line.split()[1])
+                return sys_total_mem
+        
+    mem_file.close()
+
+        
 
 def get_avail_mem() -> int:
     "return total memory that is available"
-    ...
+    with open("/proc/meminfo", "r") as mem_file:
+        for line in mem_file:    
+            if 'MemAvailable' in line:
+                available_mem = int(line.split()[1])
+                return available_mem
+    
+    mem_file.close()
 
+# first milestone ends---------------------------------------------------------------
 def pids_of_prog(app_name: str) -> list:
     "given an app name, return all pids associated with app"
     ...
